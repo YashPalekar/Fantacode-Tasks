@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="users.json"></script>
+    <style>
+		body{
+			text-align: center;
+			background-color: #2C394B;
+			color: white;
+			font-size: 1.5rem;
+		}
+		td{
+			padding: 10px;
+			background-color: #334756;
+			border-radius: 5px;
+		}
+		.table{
+			background-color: #2C394B;
+			width: 100%;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			border-radius: 15px;
+			border-spacing: 3px;
+		}
+		th{
+			height: 1.5rem;
+			padding: 5px 0 10px;
+			margin: auto;
+			background-color:#082032;
+			border-radius: 10px;
+			color: #FF4C29;
+		}
+    </style>
+    <title>Table</title>
+</head>
+<body>
+    <table class="table">
+            <tr>
+                <th data-column="name" data-order="desc">Name</th>
+                <th data-column="age" data-order="desc">Age</th>
+                <th data-column="gender" data-order="desc">Gender</th>
+            </tr>
+        
+        <tbody id="myTable">
+        </tbody>
+    </table>
+
+    <script>
+        // var myTable = [
+		// 	{
+		// 	"name": "Ryan Schuman",
+		// 	"age": 5,
+		// 	"gender": "Male"
+		// 	},
+		// 	{
+		// 	"name": "Mona Reese",
+		// 	"age": 34,
+		// 	"gender": "Female"
+		// 	},
+		// 	{
+		// 	"name": "Tyler Lawson",
+		// 	"age": 14,
+		// 	"gender": "Male"
+		// 	},
+		// 	{
+		// 	"name": "Tess Mallin",
+		// 	"age": 25,
+		// 	"gender": "Female"
+		// 	},
+		// 	{
+		// 	"name": "Jerry Parkinson",
+		// 	"age": 50,
+		// 	"gender": "Male"
+		// 	}]
+
+		var myTable = []
+
+		$.ajax({
+			method:"GET",
+			url:"./users.json",
+			success:function(response) {
+				myTable = response.data;
+				buildTable(myTable);
+				console.log(myTable)
+			}
+		})
+		
+		buildTable(myTable)
+
+        // for( let i = 0; i < myTable.length; i++) {
+        //     let row = `
+        //         <tr>
+        //             <td>$(myTable[i].name)</td>
+        //             <td>$(myTable[i].age)</td>
+        //             <td>$(myTable[i].gender)</td>
+        //         </tr>
+        //     `
+        //     $("tbody").html(row);
+        // }
+
+        // $('th').on("click", function () {
+		// 	var column = $(this).data('column');
+		// 	var order = $(this).data('order');
+		// 	console.log(column,order);
+
+		// 	if(order == 'desc') {
+		// 		$(this).data('order', 'asc')
+		// 		myTable = myTable.sort((a,b) => a[column] > b[column] ? 1 : -1);
+		// 	} else {
+		// 		$(this).data('order', 'desc')
+		// 		myTable = myTable.sort((a,b) => a[column] < b[column] ? 1 : -1);
+		// 	}
+		// 	buildTable(myTable);
+		// })
+
+    function buildTable(data){
+		var table = document.querySelector('#myTable')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${data[i].name}</td>
+							<td>${data[i].age}</td>
+							<td>${data[i].gender}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+    </script>
+</body>
+</html>
